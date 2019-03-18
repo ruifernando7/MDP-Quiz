@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">MDPQuiz</string>
+    <string name="text_name">Name</string>
+    <string name="text_type">Type:</string>
+    <string name="text_tea">Tea</string>
+    <string name="text_coffee">Coffee</string>
+    <string name="word_smoothies">Smoothies</string>
+    <string name="text_topping">Topping:</string>
+    <string name="text_pearl">Pearl</string>
+    <string name="text_pudding">Pudding</string>
+    <string name="text_read_bean">Read Bean</string>
+    <string name="text_coconut">Coconut Jelly</string>
+    <string name="text_qty">Qty:</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="one">1</string>
+    <string name="add">Add</string>
+    <string name="delete">delete</string>
+    <string name="reset">Reset</string>
+    <string name="text_nama">Nama:</string>
+    <string name="cust">Cust</string>
+    <string name="total_harga">Total Harga:</string>
+    <string name="zero">0</string>
+</resources>
