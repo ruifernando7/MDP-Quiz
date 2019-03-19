@@ -2,7 +2,10 @@ package com.example.rui.mdpquiz;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox cbPearl,cbPudding,cbReadBean,cbCoconut;
     private Button btnMinus,btnPlus,btnAdd,btnEdit,btnDelete,btnReset;
     private TextView txtQty, txtTotal, txtName;
-    private ListView lvOrder;
+    private RecyclerView rvOrder;
     private OrderAdapter adapter;
     private ArrayList<Order> arrOrder = new ArrayList<>();
     private long total = 0;
@@ -48,11 +51,35 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.button_add);
         btnDelete = findViewById(R.id.button_delete);
         btnReset = findViewById(R.id.button_reset);
-        lvOrder = findViewById(R.id.listview_order);
+        rvOrder = findViewById(R.id.recyclerview_order);
         txtName = findViewById(R.id.textView_name);
         txtTotal = findViewById(R.id.textView_total);
-        adapter = new OrderAdapter(this,arrOrder);
-        lvOrder.setAdapter(adapter);
+        adapter = new OrderAdapter(arrOrder, new RVClickListener() {
+            @Override
+            public void recyclerViewClick(View v, int posisi) {
+                index = posisi;
+                cbCoconut.setChecked(false);
+                cbReadBean.setChecked(false);
+                cbPudding.setChecked(false);
+                cbPearl.setChecked(false);
+                //radio button
+                if(arrOrder.get(posisi).getType().equals("Tea")) rbTea.setChecked(true);
+                else if(arrOrder.get(posisi).getType().equals("Coffee")) rbCoffee.setChecked(true);
+                else rbSmoothies.setChecked(true);
+                //checkbox
+                ArrayList<String> temp  = arrOrder.get(posisi).getToppings();
+                for(int i=0;i<temp.size();i++){
+                    if(temp.get(i).equals("Pearl")) cbPearl.setChecked(true);
+                    else if(temp.get(i).equals("Pudding")) cbPudding.setChecked(true);
+                    else if(temp.get(i).equals("Pudding")) cbPudding.setChecked(true);
+                    else if(temp.get(i).equals("Red Bean")) cbReadBean.setChecked(true);
+                    else if(temp.get(i).equals("Coconut Jelly")) cbCoconut.setChecked(true);
+                }
+            }
+        });
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
+        rvOrder.setLayoutManager(lm);
+        rvOrder.setAdapter(adapter);
         total = 0;
 
         btnMinus.setOnClickListener(new View.OnClickListener() {
@@ -162,28 +189,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        lvOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                index = position;
-                cbCoconut.setChecked(false);
-                cbReadBean.setChecked(false);
-                cbPudding.setChecked(false);
-                cbPearl.setChecked(false);
-                //radio button
-                if(arrOrder.get(position).getType().equals("Tea")) rbTea.setChecked(true);
-                else if(arrOrder.get(position).getType().equals("Coffee")) rbCoffee.setChecked(true);
-                else rbSmoothies.setChecked(true);
-                //checkbox
-                ArrayList<String> temp  = arrOrder.get(position).getToppings();
-                for(int i=0;i<temp.size();i++){
-                    if(temp.get(i).equals("Pearl")) cbPearl.setChecked(true);
-                    else if(temp.get(i).equals("Pudding")) cbPudding.setChecked(true);
-                    else if(temp.get(i).equals("Pudding")) cbPudding.setChecked(true);
-                    else if(temp.get(i).equals("Red Bean")) cbReadBean.setChecked(true);
-                    else if(temp.get(i).equals("Coconut Jelly")) cbCoconut.setChecked(true);
-                }
-            }
-        });
     }
 }

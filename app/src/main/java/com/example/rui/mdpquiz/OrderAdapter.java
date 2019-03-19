@@ -1,6 +1,8 @@
 package com.example.rui.mdpquiz;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,27 +11,48 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class OrderAdapter extends ArrayAdapter<Order> {
-    private final Context context;
-    private final ArrayList<Order> data;
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
+    private ArrayList<Order> data;
+    private static RVClickListener myListener;
 
-    public OrderAdapter(Context context, ArrayList<Order> data) {
-        super(context, -1, data);
-        this.context = context;
+    public OrderAdapter(ArrayList<Order> data,RVClickListener rvcl) {
+        myListener = rvcl;
         this.data = data;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.row_item_order, parent, false);
-        TextView tvQtyType = rowView.findViewById(R.id.textView_qty_type);
-        TextView tvTopping = rowView.findViewById(R.id.textView_toppings);
-        TextView tvSubtotal = rowView.findViewById(R.id.textView_subtotal);
-        tvQtyType.setText(data.get(position).getQty()+" "+data.get(position).getType());
-        tvTopping.setText(data.get(position).getToppings().toString());
-        tvSubtotal.setText(String.valueOf(data.get(position).getSubtotal()));
-        return rowView;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View v = inflater.inflate(R.layout.row_item_order, viewGroup,false);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        viewHolder.tvQtyType.setText(data.get(i).getQty()+" "+data.get(i).getType());
+        viewHolder.tvTopping.setText(data.get(i).getToppings().toString());
+        viewHolder.tvSubtotal.setText(String.valueOf(data.get(i).getSubtotal()));
+    }
+
+    @Override
+    public int getItemCount() {
+        return (data!=null)?data.size():0;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvQtyType,tvTopping,tvSubtotal;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvQtyType = itemView.findViewById(R.id.textView_qty_type);
+            tvTopping = itemView.findViewById(R.id.textView_toppings);
+            tvSubtotal = itemView.findViewById(R.id.textView_subtotal);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myListener.recyclerViewClick(v,ViewHolder.this.getLayoutPosition());
+                }
+            });
+        }
     }
 }
