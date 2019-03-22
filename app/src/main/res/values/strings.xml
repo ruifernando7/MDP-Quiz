@@ -18,7 +18,7 @@
     <string name="delete">delete</string>
     <string name="reset">Reset</string>
     <string name="text_nama">Nama:</string>
-    <string name="cust">Cust</string>
-    <string name="total_harga">Total Harga:</string>
+    <string name="cust">Hi,Cust!</string>
+    <string name="total_harga">Total: Rp.</string>
     <string name="zero">0</string>
 </resources>

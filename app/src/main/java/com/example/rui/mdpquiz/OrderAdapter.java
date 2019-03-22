@@ -31,8 +31,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.tvQtyType.setText(data.get(i).getQty()+" "+data.get(i).getType());
-        viewHolder.tvTopping.setText(data.get(i).getToppings().toString());
-        viewHolder.tvSubtotal.setText(String.valueOf(data.get(i).getSubtotal()));
+        if(data.get(i).getToppings().isEmpty()) viewHolder.tvTopping.setText("with Toppings: -");
+        else viewHolder.tvTopping.setText("with Toppings: "+ data.get(i).getToppings().toString().substring(1,data.get(i).getToppings().toString().length()-1));
+        viewHolder.tvSubtotal.setText("Rp. "+String.valueOf(data.get(i).getSubtotal()));
     }
 
     @Override

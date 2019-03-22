@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 if(edName.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Field Name cannot be empty",Toast.LENGTH_LONG).show();
                 }else{
-                    txtName.setText(edName.getText().toString());
+                    txtName.setText("Hi,"+edName.getText().toString()+"!");
                     int subtotal = 0;
                     String tipe = "";
                     ArrayList<String> arrTopping = new ArrayList<>();
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 txtQty.setText("1");
                 arrOrder.clear();
                 adapter.notifyDataSetChanged();
-                txtName.setText("Cust");
+                txtName.setText("Hi,Cust!");
                 total = 0;
                 txtTotal.setText("0");
             }
